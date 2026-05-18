@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import VueTypewriterEffect from "vue-typewriter-effect";
 import Button from "../common/Button.vue";
-import { PhArrowRight } from "@phosphor-icons/vue";
+import { PhArrowRight, PhEnvelopeSimple, PhGithubLogo, PhLinkedinLogo } from "@phosphor-icons/vue";
+import ExternalLink from "../common/ExternalLink.vue";
+import Line from "../common/Line.vue";
 
 
 </script>
@@ -10,7 +12,7 @@ import { PhArrowRight } from "@phosphor-icons/vue";
   <section class="cont sec-margin">
     <div class="space-y-4">
       <div class="text-lg md:text-xl flex items-center gap-2 text-primary font-semibold">
-        <div class="h-0.5 w-5 bg-primary"></div>
+        <Line />
         <vue-typewriter-effect :strings="['Hello, I\'m Mahmud', 'I\'m a Web Developer']" />
       </div>
       <h1 class="capitalize">
@@ -38,6 +40,20 @@ import { PhArrowRight } from "@phosphor-icons/vue";
             Get in Touch
           </Button>
         </router-link>
+      </div>
+      <div class="flex items-center gap-4 mt-8">
+        <ExternalLink href="https://github.com/mahmuddevs" ariaLabel="GitHub Profile"
+          class="p-2 hover:bg-primary/20 rounded-md transition-all duration-300 ease-in-out icon-center border border-primary hover:-translate-y-1">
+          <PhGithubLogo class="text-lg md:text-2xl" />
+        </ExternalLink>
+        <ExternalLink href="https://www.linkedin.com/in/themahmudrashid" ariaLabel="Linkedin Profile"
+          class="p-2 hover:bg-primary/20 rounded-md transition-all duration-300 ease-in-out icon-center border border-primary hover:-translate-y-1">
+          <PhLinkedinLogo class="text-lg md:text-2xl" />
+        </ExternalLink>
+        <ExternalLink href="mailto:mahmudrashid574@gmail.com" ariaLabel="Email"
+          class="p-2 hover:bg-primary/20 rounded-md transition-all duration-300 ease-in-out icon-center border border-primary hover:-translate-y-1">
+          <PhEnvelopeSimple class="text-lg md:text-2xl" />
+        </ExternalLink>
       </div>
     </div>
   </section>

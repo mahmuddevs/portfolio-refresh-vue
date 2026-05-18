@@ -64,24 +64,27 @@ h1,
 
 h2,
 .h2 {
-  @apply text-5xl md:text-6xl font-bold text-balance;
+  @apply text-[24px] sm:text-5xl md:text-6xl lg:text-7xl font-bold text-balance;
 }
 
 h3,
 .h3 {
-  @apply text-4xl md:text-5xl font-bold text-balance;
+  @apply text-[20px] sm:text-4xl md:text-5xl lg:text-6xl font-bold text-balance;
 }
+
 h4,
 .h4 {
-  @apply text-3xl md:text-4xl font-bold text-balance;
+  @apply text-[18px] sm:text-3xl md:text-4xl lg:text-5xl font-bold text-balance;
 }
+
 h5,
 .h5 {
-  @apply text-2xl md:text-3xl font-bold text-balance;
+  @apply text-[16px] sm:text-2xl md:text-3xl lg:text-4xl font-bold text-balance;
 }
+
 h6,
 .h6 {
-  @apply text-xl md:text-2xl font-bold text-balance;
+  @apply text-[14px] sm:text-xl md:text-2xl lg:text-3xl font-bold text-balance;
 }
 h1 span {
   @apply text-primary;

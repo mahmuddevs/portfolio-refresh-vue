@@ -1,23 +1,25 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import type { Component } from 'vue';
 import {
   PhX,
-  PhList,
-  PhHouse,
-  PhFolderOpen,
-  PhEnvelope,
+  PhList
 } from '@phosphor-icons/vue';
 import Logo from './common/Logo.vue';
 import { useRouter } from 'vue-router';
 
+interface MenuItem {
+  label: string;
+  path: string;
+  icon: Component;
+}
+
+defineProps<{
+  items: MenuItem[];
+}>();
+
 const isOpen = ref(false);
 const router = useRouter();
-
-const menuItems = [
-  { label: 'Home', path: '/', icon: PhHouse },
-  { label: 'Projects', path: '/projects', icon: PhFolderOpen },
-  { label: 'Contact', path: '/contact', icon: PhEnvelope },
-];
 
 const navigateTo = (path: string) => {
   router.push(path);
@@ -47,7 +49,7 @@ const toggleMenu = () => {
     <transition name="slide">
       <div v-if="isOpen" class="fixed left-0 top-0 h-full w-64 bg-background z-50 overflow-y-auto">
         <!-- Header with Logo and Close Button -->
-        <div class="flex items-center justify-between p-6 border-b">
+        <div class="flex items-center justify-between px-4 py-2 border-b">
           <Logo />
           <button @click="isOpen = false"
             class="p-2 hover:bg-secondary dark:hover:bg-primary/40 rounded-md transition-colors"
@@ -59,13 +61,13 @@ const toggleMenu = () => {
         <!-- Menu Items -->
         <nav class="py-6">
           <ul class="space-y-4 px-4">
-            <li v-for="item in menuItems" :key="item.path">
+            <li v-for="item in items" :key="item.path">
               <button @click="navigateTo(item.path)"
                 class="flex items-center gap-4 w-full px-4 py-3 rounded-lg hover:bg-secondary transition-colors text-left group">
                 <component :is="item.icon" :size="20" class="group-hover:text-primary transition-colors" />
                 <span class="group-hover:text-primary transition-colors">{{
                   item.label
-                }}</span>
+                  }}</span>
               </button>
             </li>
           </ul>
