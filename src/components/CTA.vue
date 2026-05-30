@@ -10,7 +10,7 @@ import ExternalLink from './common/ExternalLink.vue';
   <section class="w-11/12 max-w-2xl md:max-w-3xl mx-auto sec-margin space-y-6">
     <SectionHeading :center=true>
       <template #heading>
-        <h3 class="capitalize">Ready to build something <span>exceptional</span>?</h3>
+        <h2 class="capitalize">Ready to build something <span>exceptional</span>?</h2>
       </template>
       <template #paragraph>
         <p>Let's collaborate on your next project. Get in touch and let's create something amazing together.</p>
