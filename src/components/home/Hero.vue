@@ -4,12 +4,14 @@ import Button from "../common/Button.vue";
 import { PhArrowRight, PhEnvelopeSimple, PhGithubLogo, PhLinkedinLogo } from "@phosphor-icons/vue";
 import ExternalLink from "../common/ExternalLink.vue";
 import Line from "../common/Line.vue";
+import HeroVisual from "./HeroVisual.vue";
 
 
 </script>
 
 <template>
-  <section class="cont sec-margin">
+  <section class="cont sec-margin grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <!-- Left Column: Copy & Links -->
     <div class="space-y-4">
       <div class="text-lg md:text-xl flex items-center gap-2 text-primary font-semibold">
         <Line />
@@ -21,7 +23,7 @@ import Line from "../common/Line.vue";
           digital experiences
         </span>
       </h1>
-      <p class="md:text-xl max-w-2xl">
+      <p class="md:text-xl max-w-2xl text-foreground/80 dark:text-foreground/75 leading-relaxed">
         I craft high-performance web applications with React and Next.js. Specialized in converting designs to
         pixel-perfect, fully functional interfaces.
       </p>
@@ -55,6 +57,11 @@ import Line from "../common/Line.vue";
           <PhEnvelopeSimple class="text-lg md:text-2xl" />
         </ExternalLink>
       </div>
+    </div>
+
+    <!-- Right Column: Interactive IDE/Terminal Visual mockup -->
+    <div class="w-full">
+      <HeroVisual />
     </div>
   </section>
 </template>

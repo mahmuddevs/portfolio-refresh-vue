@@ -9,8 +9,9 @@ import { socials } from '@/utils/socials';
 <template>
   <section class="cont sec-margin">
     <SectionHeading :center="true">
+      <template #subheading>Contact</template>
       <template #heading>
-        <h3>Let's Work Together</h3>
+        <h2 class="capitalize">Let's Work <span>Together</span></h2>
       </template>
       <template #paragraph>
         <p class="max-w-lg text-foreground/75">
