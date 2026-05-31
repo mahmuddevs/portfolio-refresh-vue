@@ -9,7 +9,8 @@ export interface Project {
   description: string;
   image: string;
   tags: string[];
-  githubUrl: string;
+  githubFrontendUrl?: string;
+  githubBackendUrl?: string;
   liveUrl: string;
   featured: boolean;
 }
@@ -22,7 +23,7 @@ const projects: Project[] = [
     description: "A premium software development Q&A platform featuring rich text editing, AI-powered answer summaries, customizable profile dashboards, and detailed search filtering.",
     image: devflowImg,
     tags: ["Next.js", "React", "MongoDB", "Tailwind CSS", "Clerk"],
-    githubUrl: "https://github.com/mahmuddevs/devflow",
+    githubFrontendUrl: "https://github.com/mahmuddevs/devflow",
     liveUrl: "https://devflow-showcase.vercel.app",
     featured: true
   },
@@ -33,7 +34,7 @@ const projects: Project[] = [
     description: "A high-performance financial analytics dashboard displaying live stock indices and cryptocurrency trends with interactive, responsive gradient charting.",
     image: fintrendImg,
     tags: ["Vue.js", "Vite", "Pinia", "Chart.js", "Tailwind CSS"],
-    githubUrl: "https://github.com/mahmuddevs/fintrend",
+    githubFrontendUrl: "https://github.com/mahmuddevs/fintrend",
     liveUrl: "https://fintrend-showcase.vercel.app",
     featured: true
   },
@@ -44,7 +45,8 @@ const projects: Project[] = [
     description: "An elegant, highly interactive team collaboration workspace featuring drag-and-drop task boards, workspace switching, activity logs, and real-time status updates.",
     image: taskifyImg,
     tags: ["React", "Redux Toolkit", "Express", "Node.js", "PostgreSQL"],
-    githubUrl: "https://github.com/mahmuddevs/taskify",
+    githubFrontendUrl: "https://github.com/mahmuddevs/taskify-frontend",
+    githubBackendUrl: "https://github.com/mahmuddevs/taskify-backend",
     liveUrl: "https://taskify-showcase.vercel.app",
     featured: true
   }
