@@ -8,12 +8,16 @@ defineProps<{
   title: string;
   liveUrl: string;
 }>();
+
+defineEmits<{
+  'open-lightbox': [];
+}>();
 </script>
 
 <template>
   <div
     class="relative group border border-border/10 dark:border-white/5 rounded-2xl overflow-hidden bg-secondary/20 dark:bg-secondary/10 shadow-2xl transition-all duration-500 ease-out hover:-translate-y-1">
-    <img :src="image" :alt="title" class="w-full h-auto object-cover max-h-125" />
+    <img :src="image" :alt="title" class="w-full h-auto object-cover max-h-125 cursor-zoom-in" @click="$emit('open-lightbox')" />
 
     <!-- Float Action Overlay -->
     <div class="absolute bottom-6 right-6 flex items-center gap-3">

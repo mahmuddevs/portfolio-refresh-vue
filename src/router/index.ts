@@ -17,17 +17,17 @@ const router = createRouter({
           component: () => import("@/pages/Home.vue"),
         },
         {
-          path: "/contact",
+          path: "contact",
           name: "contact",
           component: () => import("@/pages/Contact.vue"),
         },
         {
-          path: "/projects",
+          path: "projects",
           name: "projects",
           component: () => import("@/pages/Projects.vue"),
         },
         {
-          path: "/projects/:slug",
+          path: "projects/:slug",
           name: "project-detail",
           component: () => import("@/pages/ProjectDetail.vue"),
         },
@@ -54,6 +54,16 @@ const router = createRouter({
           path: "",
           name: "dashboard-home",
           component: () => import("@/pages/Dashboard/Home.vue"),
+        },
+        {
+          path: "projects/add",
+          name: "add-project",
+          component: () => import("@/pages/Dashboard/AddProject.vue"),
+        },
+        {
+          path: "projects",
+          name: "dashboard-projects",
+          component: () => import("@/pages/Dashboard/Projects.vue"),
         },
       ],
     },

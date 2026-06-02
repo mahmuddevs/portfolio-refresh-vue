@@ -1,9 +1,13 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { PhArrowLeft } from '@phosphor-icons/vue';
+import { PhArrowLeft, PhSpinner } from '@phosphor-icons/vue';
 import Button from '@/components/common/Button.vue';
-import projectsData from '@/utils/projects';
+import FsLightboxComponent from 'fslightbox-vue';
+import { useGetQuery } from '@/composables/useGetQuery';
+
+// Resolve CommonJS default export wrapper for Vite ESM builds
+const FsLightbox = (FsLightboxComponent as any).default || FsLightboxComponent;
 
 // Import newly structured project detail sub-components
 import DetailHeader from '@/components/project-details/DetailHeader.vue';
@@ -12,29 +16,18 @@ import DetailContent from '@/components/project-details/DetailContent.vue';
 import DetailSidebar from '@/components/project-details/DetailSidebar.vue';
 
 const route = useRoute();
+const toggler = ref(false);
 
-// Additional details scaffolding that can be easily customized or expanded in the utils/projects.ts schema
-const project = computed(() => {
-  const slug = Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug;
-  const p = projectsData.find(item => item.slug === slug);
-  if (!p) return null;
+const slug = computed(() => {
+  const s = route.params.slug;
+  return Array.isArray(s) ? s[0] : s;
+});
 
-  return {
-    ...p,
-    // Add additional metadata fields with defaults (customizable in the database schema)
-    role: "Lead Frontend Developer",
-    timeline: "3 Months (Q1 2026)",
-    client: "Showcase & Open Source",
-    overview: p.description + " Developed with focus on exceptional user interactions, visual depth, and responsive layouts.",
-    challenges: "Building a high-performance interactive interface with real-time feedback and state preservation. Optimizing component renders under high load, and maintaining an exceptionally premium glassmorphic styling contour across all mobile devices.",
-    solution: "Leveraged Vue's reactive ecosystem alongside high-end modular component architecture. Implemented responsive event listeners, custom utility states, and applied modern CSS properties with tailored radial blur configurations.",
-    features: [
-      "Dynamic interactive layout components",
-      "Frosted-glass design system with harmonized color accents",
-      "Fully responsive architecture optimized for mobile platforms",
-      "State preservation and smooth visual animations"
-    ]
-  };
+// Fetch project by slug using useGetQuery
+const { data: project, isLoading } = useGetQuery<any>({
+  url: computed(() => `/projects/${slug.value}`),
+  keys: computed(() => [slug.value]),
+  enabled: computed(() => !!slug.value),
 });
 </script>
 
@@ -60,23 +53,36 @@ const project = computed(() => {
         </router-link>
       </div>
 
+      <!-- Loading State -->
+      <div v-if="isLoading" class="text-center py-24 flex flex-col items-center justify-center space-y-4">
+        <PhSpinner class="animate-spin text-primary" :size="48" />
+        <p class="text-foreground/50 text-sm">Loading project details...</p>
+      </div>
+
       <!-- Project Found State -->
-      <div v-if="project" class="space-y-12 sm:space-y-16">
+      <div v-else-if="project" class="space-y-12 sm:space-y-16">
 
         <!-- Header Showcase area -->
         <DetailHeader
           :title="project.title"
           :overview="project.overview"
-          :client="project.client"
+          :client="project.client || 'Personal Project'"
           :role="project.role"
           :timeline="project.timeline"
         />
 
         <!-- Image Mockup Showcase -->
         <DetailImage
-          :image="project.image"
+          :image="project.images?.[0] || project.image || ''"
           :title="project.title"
           :liveUrl="project.liveUrl"
+          @open-lightbox="toggler = !toggler"
+        />
+
+        <!-- Lightbox Component -->
+        <FsLightbox
+          :toggler="toggler"
+          :sources="project.images && project.images.length > 0 ? project.images : [project.image || '']"
         />
 
         <!-- Double Column Content block -->
