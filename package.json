@@ -17,6 +17,7 @@
   "dependencies": {
     "@phosphor-icons/vue": "^2.2.1",
     "@tailwindcss/vite": "^4.3.0",
+    "@tanstack/vue-query": "^5.100.14",
     "pinia": "^3.0.4",
     "swiper": "^12.1.4",
     "tailwindcss": "^4.3.0",
