@@ -71,9 +71,7 @@ const featuredProjects = computed(() => data.value?.projects || []);
       <!-- Project Cards Grid -->
       <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8 items-stretch mb-0!">
         <div v-for="project in featuredProjects" :key="project.slug" class="h-full">
-          <router-link :to="'/projects/' + project.slug">
-            <ProjectCard :project="project" />
-          </router-link>
+          <ProjectCard :project="project" />
         </div>
       </div>
 

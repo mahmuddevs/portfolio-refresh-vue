@@ -12,7 +12,7 @@ defineProps<{
   <article
     class="group relative flex flex-col h-full bg-secondary/30 dark:bg-secondary/20 border border-border/10 dark:border-white/5 rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-primary/5 dark:hover:shadow-primary/10 transition-all duration-500 ease-out hover:-translate-y-2">
     <!-- Project Image Container -->
-    <div class="relative overflow-hidden aspect-video w-full bg-secondary/50 dark:bg-secondary/40">
+    <router-link :to="'/projects/' + project.slug" class="block relative overflow-hidden aspect-video w-full bg-secondary/50 dark:bg-secondary/40">
       <img :src="project.image || (project.images && project.images[0])" :alt="project.title"
         class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700 ease-out"
         loading="lazy" />
@@ -20,17 +20,15 @@ defineProps<{
       <!-- Premium Dark Hover Overlay with Quick Actions -->
       <div
         class="absolute inset-0 bg-linear-to-t from-background/95 via-background/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out flex items-end justify-between p-6">
-        <span
-          class="text-xs font-bold tracking-wider uppercase text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20 backdrop-blur-xs">
-          Interactive Mockup
-        </span>
       </div>
-    </div>
+    </router-link>
 
     <!-- Project Details -->
     <div class="flex-1 flex flex-col p-6 @container">
       <h4 class="text-foreground group-hover:text-primary transition-colors duration-300">
-        {{ project.title }}
+        <router-link :to="'/projects/' + project.slug" class="hover:text-primary transition-colors duration-300">
+          {{ project.title }}
+        </router-link>
       </h4>
 
       <p class="mt-3 text-sm sm:text-base text-foreground/70 dark:text-foreground/60 flex-1 leading-relaxed">
