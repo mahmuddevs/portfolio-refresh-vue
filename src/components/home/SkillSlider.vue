@@ -9,7 +9,7 @@ import 'swiper/css';
 const duplicatedSkills = [...skills, ...skills];
 </script>
 <template>
-  <section class="border-y border-border/10 dark:border-white/5 sec-margin sec-padding space-y-8">
+  <section class="border-y border-border/10 dark:border-white/5 sec-padding space-y-8">
     <div class="cont">
       <SectionHeading>
         <template #subheading>Experties</template>

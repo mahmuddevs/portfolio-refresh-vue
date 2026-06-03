@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import {
   PhMoonStars,
   PhSunDim,
@@ -8,19 +8,30 @@ import {
   PhEnvelope,
   PhList,
   PhDownloadSimple,
+  PhLayout,
 } from '@phosphor-icons/vue';
 import { useThemeStore } from '../stores/theme';
+import { useAuthStore } from '../stores/auth';
 import Logo from './common/Logo.vue';
 import MobileMenu from './MobileMenu.vue';
 
 const theme = useThemeStore();
+const authStore = useAuthStore();
 const isMenuOpen = ref(false);
 
-const menuItems = [
-  { label: 'Home', path: '/', icon: PhHouse },
-  { label: 'Projects', path: '/projects', icon: PhFolderOpen },
-  { label: 'Contact', path: '/contact', icon: PhEnvelope },
-];
+const menuItems = computed(() => {
+  const items = [
+    { label: 'Home', path: '/', icon: PhHouse },
+    { label: 'Projects', path: '/projects', icon: PhFolderOpen },
+    { label: 'Contact', path: '/contact', icon: PhEnvelope },
+  ];
+
+  if (authStore.isAuthenticated && authStore.isAdmin) {
+    items.push({ label: 'Dashboard', path: '/dashboard', icon: PhLayout });
+  }
+
+  return items;
+});
 
 </script>
 <template>

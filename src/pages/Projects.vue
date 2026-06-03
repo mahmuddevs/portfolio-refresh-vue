@@ -1,19 +1,30 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import SectionHeading from '@/components/common/SectionHeading.vue';
 import ProjectCard from '@/components/common/ProjectCard.vue';
 import Pagination from '@/components/common/Pagination.vue';
-import projectsData from '@/utils/projects';
+import NoData from '@/components/common/NoData.vue';
+import { PhSpinner } from '@phosphor-icons/vue';
+import { useGetQuery } from '@/composables/useGetQuery';
 
-// Page-level state variables loaded with dummy data (no props/emits since it's route-driven)
-const projects = ref(projectsData);
 const currentPage = ref(1);
-const totalPages = ref(3);
+const limit = 6;
+
+const { data, isLoading } = useGetQuery<any>({
+  url: '/projects',
+  queryParams: () => ({
+    page: currentPage.value,
+    limit,
+    sort: '-createdAt',
+  }),
+  keys: [currentPage],
+});
+
+const projects = computed(() => data.value?.projects || []);
+const totalPages = computed(() => data.value?.meta?.totalPages || 1);
 
 const changePage = (pageNum: number) => {
-  if (pageNum >= 1 && pageNum <= totalPages.value) {
-    currentPage.value = pageNum;
-  }
+  currentPage.value = pageNum;
 };
 </script>
 
@@ -45,15 +56,31 @@ const changePage = (pageNum: number) => {
         </template>
       </SectionHeading>
 
-      <!-- Projects Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="project in projects" :key="project.id" class="h-full">
-          <ProjectCard :project="project" />
-        </div>
+      <!-- Loading State -->
+      <div v-if="isLoading" class="flex flex-col items-center justify-center py-20 space-y-3">
+        <PhSpinner class="animate-spin text-primary" :size="36" />
+        <p class="text-sm text-foreground/60 font-medium">Loading projects...</p>
       </div>
 
-      <!-- Reusable Premium Pagination Controls -->
-      <Pagination :currentPage="currentPage" :totalPages="totalPages" @pageChange="changePage" />
+      <!-- Empty State -->
+      <div v-else-if="projects.length === 0" class="py-6">
+        <NoData
+          title="No Projects Found"
+          message="There are no projects in the portfolio yet. Please check back later!"
+        />
+      </div>
+
+      <div v-else class="space-y-12 sm:space-y-16">
+        <!-- Projects Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div v-for="project in projects" :key="project.slug" class="h-full">
+            <ProjectCard :project="project" />
+          </div>
+        </div>
+
+        <!-- Reusable Premium Pagination Controls -->
+        <Pagination :currentPage="currentPage" :totalPages="totalPages" @pageChange="changePage" />
+      </div>
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { PhSignOut } from '@phosphor-icons/vue';
 import { dashboardNavItems } from '@/utils/dashboard-nav';
 import { useAuthStore } from '@/stores/auth';
@@ -12,9 +12,11 @@ defineProps<{
 
 const authStore = useAuthStore();
 const route = useRoute();
+const router = useRouter();
 
 const handleLogout = async () => {
   await authStore.logout();
+  router.push('/admin-login');
 };
 
 const isActive = (path: string) => {

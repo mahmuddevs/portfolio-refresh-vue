@@ -1,19 +1,27 @@
 <script setup lang="ts">
 import SectionHeading from '../common/SectionHeading.vue';
 import ProjectCard from '../common/ProjectCard.vue';
-import projects from '@/utils/projects';
+import NoData from '../common/NoData.vue';
 import Button from '../common/Button.vue';
-import { PhArrowRight } from '@phosphor-icons/vue';
+import { PhArrowRight, PhSpinner } from '@phosphor-icons/vue';
 import { computed } from 'vue';
+import { useGetQuery } from '@/composables/useGetQuery';
 
-// Get only the featured projects (limit to 3 for clean display)
-const featuredProjects = computed(() =>
-  projects.filter(project => project.featured).slice(0, 3)
-);
+// Fetch featured projects from database (up to 3 items)
+const { data, isLoading } = useGetQuery<any>({
+  url: '/projects',
+  queryParams: {
+    featured: true,
+    limit: 3,
+    sort: '-createdAt',
+  },
+});
+
+const featuredProjects = computed(() => data.value?.projects || []);
 </script>
 
 <template>
-  <section class="sec-margin sec-padding border-y border-border/10 dark:border-white/5 relative overflow-hidden">
+  <section class="sec-padding border-y border-border/10 dark:border-white/5 relative overflow-hidden">
     <!-- Subtle Background Glows -->
     <div
       class="absolute top-1/3 left-1/4 -translate-x-1/2 w-87.5 h-87.5 bg-primary/5 rounded-full blur-[100px] pointer-events-none">
@@ -48,9 +56,21 @@ const featuredProjects = computed(() =>
         </router-link>
       </div>
 
+      <!-- Loading State -->
+      <div v-if="isLoading" class="flex flex-col items-center justify-center py-16 space-y-3">
+        <PhSpinner class="animate-spin text-primary" :size="32" />
+        <p class="text-sm text-foreground/60 font-medium">Loading featured projects...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div v-else-if="featuredProjects.length === 0" class="py-6">
+        <NoData title="No Featured Projects"
+          message="There are no featured projects highlighting right now. Explore all projects using the link below!" />
+      </div>
+
       <!-- Project Cards Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8 items-stretch mb-0!">
-        <div v-for="project in featuredProjects" :key="project.id" class="h-full">
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8 items-stretch mb-0!">
+        <div v-for="project in featuredProjects" :key="project.slug" class="h-full">
           <router-link :to="'/projects/' + project.slug">
             <ProjectCard :project="project" />
           </router-link>
@@ -58,7 +78,7 @@ const featuredProjects = computed(() =>
       </div>
 
       <!-- Mobile Call to Action Button -->
-      <div class="flex justify-center lg:hidden pt-4 w-fit mx-auto">
+      <div v-if="!isLoading && featuredProjects.length > 0" class="flex justify-center lg:hidden pt-4 w-fit mx-auto">
         <router-link to="/projects" class="w-full">
           <Button type="secondary" class="w-full justify-center">
             View All Projects

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import {
   PhList,
   PhMoonStars,
@@ -25,6 +25,7 @@ const emit = defineEmits<{
 const theme = useThemeStore();
 const authStore = useAuthStore();
 const route = useRoute();
+const router = useRouter();
 
 const isDropdownOpen = ref(false);
 const dropdownRef = ref<HTMLElement | null>(null);
@@ -80,6 +81,7 @@ onUnmounted(() => {
 
 const handleLogout = async () => {
   await authStore.logout();
+  router.push('/admin-login');
 };
 </script>
 

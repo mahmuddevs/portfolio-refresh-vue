@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { type Project } from '@/utils/projects';
 import { PhEye, PhArrowUpRight } from '@phosphor-icons/vue';
 import ExternalLink from './ExternalLink.vue';
+import type { Project } from '@/types/projects.ts';
 
 defineProps<{
   project: Project;
@@ -13,7 +13,7 @@ defineProps<{
     class="group relative flex flex-col h-full bg-secondary/30 dark:bg-secondary/20 border border-border/10 dark:border-white/5 rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-primary/5 dark:hover:shadow-primary/10 transition-all duration-500 ease-out hover:-translate-y-2">
     <!-- Project Image Container -->
     <div class="relative overflow-hidden aspect-video w-full bg-secondary/50 dark:bg-secondary/40">
-      <img :src="project.image" :alt="project.title"
+      <img :src="project.image || (project.images && project.images[0])" :alt="project.title"
         class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700 ease-out"
         loading="lazy" />
 

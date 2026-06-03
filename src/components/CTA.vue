@@ -17,13 +17,15 @@ import ExternalLink from './common/ExternalLink.vue';
       </template>
     </SectionHeading>
     <div class="flex items-center justify-center gap-4">
-      <Button :type="'primary'">
-        Start A Project
-        <template #posticon>
-          <PhArrowRight :size="20"
-            class="icon-center group-hover:translate-x-1 transition-transform ease-in-out duration-300" />
-        </template>
-      </Button>
+      <router-link to="/contact">
+        <Button :type="'primary'">
+          Start A Project
+          <template #posticon>
+            <PhArrowRight :size="20"
+              class="icon-center group-hover:translate-x-1 transition-transform ease-in-out duration-300" />
+          </template>
+        </Button>
+      </router-link>
       <ExternalLink href="mailto:mahmudrashid574@gmail.com">
         <Button :type="'secondary'">
           Send Email

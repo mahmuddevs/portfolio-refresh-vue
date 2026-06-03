@@ -61,13 +61,30 @@ const router = createRouter({
           component: () => import("@/pages/Dashboard/AddProject.vue"),
         },
         {
+          path: "projects/edit/:slug",
+          name: "edit-project",
+          component: () => import("@/pages/Dashboard/EditProject.vue"),
+        },
+        {
           path: "projects",
           name: "dashboard-projects",
           component: () => import("@/pages/Dashboard/Projects.vue"),
         },
       ],
     },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "not-found",
+      component: () => import("@/pages/NotFound.vue"),
+    },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0 };
+    }
+  },
 });
 
 router.beforeEach(async (to, from, next) => {
