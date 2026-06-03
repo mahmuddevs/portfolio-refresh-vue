@@ -38,7 +38,9 @@ export function useQueryMutation<TData = any, TError = Error, TVariables = void,
       const response = await getFetch<any>(resolvedUrl, {
         method: resolvedMethod,
         private: resolvedIsPrivate,
-        body: variables,
+        body: resolvedMethod === "DELETE" && typeof variables !== "object"
+          ? undefined
+          : variables,
       });
 
       // Return body.data if present to match useGetQuery behavior, fallback to full body response

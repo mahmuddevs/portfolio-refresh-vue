@@ -87,7 +87,7 @@ const router = createRouter({
   },
 });
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, from) => {
   const authStore = useAuthStore();
 
   const requiresAdmin = to.matched.some((record) => record.meta.requiresAdmin);
@@ -103,14 +103,12 @@ router.beforeEach(async (to, from, next) => {
 
     if (requiresAdmin) {
       if (!isAuth || !isAdmin) {
-        return next({ name: "admin-login" });
+        return { name: "admin-login" };
       }
     } else if (guestOnly && isAuth && isAdmin) {
-      return next({ name: "dashboard-home" });
+      return { name: "dashboard-home" };
     }
   }
-
-  next();
 });
 
 export default router;

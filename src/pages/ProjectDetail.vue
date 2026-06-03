@@ -29,6 +29,22 @@ const { data: project, isLoading } = useGetQuery<any>({
   keys: computed(() => [slug.value]),
   enabled: computed(() => !!slug.value),
 });
+
+const lightboxSources = computed(() => {
+  if (!project.value) return [];
+  const sources: string[] = [];
+  if (Array.isArray(project.value.images)) {
+    project.value.images.forEach((img: any) => {
+      if (img && typeof img === 'string' && img.trim() !== '') {
+        sources.push(img);
+      }
+    });
+  }
+  if (sources.length === 0 && project.value.image && typeof project.value.image === 'string' && project.value.image.trim() !== '') {
+    sources.push(project.value.image);
+  }
+  return sources;
+});
 </script>
 
 <template>
@@ -81,8 +97,9 @@ const { data: project, isLoading } = useGetQuery<any>({
 
         <!-- Lightbox Component -->
         <FsLightbox
+          v-if="lightboxSources.length > 0"
           :toggler="toggler"
-          :sources="project.images && project.images.length > 0 ? project.images : [project.image || '']"
+          :sources="lightboxSources"
         />
 
         <!-- Double Column Content block -->
