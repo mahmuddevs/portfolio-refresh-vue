@@ -1,1 +1,0 @@
-import{L as e,X as t,ft as n}from"./index-BHvERzwZ.js";var r={};function i(e,r){return n(),t(`div`,null,` Dashboard Home Page `)}var a=e(r,[[`render`,i]]);export{a as default};
