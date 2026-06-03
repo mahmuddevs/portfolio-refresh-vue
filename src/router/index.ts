@@ -90,27 +90,27 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
 
-  if (authStore.loading) {
-    await authStore.checkAuth();
-  }
-
-  const isAuth = authStore.isAuthenticated;
-  const isAdmin = authStore.isAdmin;
-
   const requiresAdmin = to.matched.some((record) => record.meta.requiresAdmin);
   const guestOnly = to.matched.some((record) => record.meta.guestOnly);
 
-  if (requiresAdmin) {
-    if (!isAuth || !isAdmin) {
-      next({ name: "admin-login" });
-    } else {
-      next();
+  if (requiresAdmin || guestOnly) {
+    if (authStore.loading) {
+      await authStore.checkAuth();
     }
-  } else if (guestOnly && isAuth && isAdmin) {
-    next({ name: "dashboard-home" });
-  } else {
-    next();
+
+    const isAuth = authStore.isAuthenticated;
+    const isAdmin = authStore.isAdmin;
+
+    if (requiresAdmin) {
+      if (!isAuth || !isAdmin) {
+        return next({ name: "admin-login" });
+      }
+    } else if (guestOnly && isAuth && isAdmin) {
+      return next({ name: "dashboard-home" });
+    }
   }
+
+  next();
 });
 
 export default router;

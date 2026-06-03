@@ -45,7 +45,7 @@ const menuItems = computed(() => {
             <router-link :to="item.path">{{ item.label }}</router-link>
           </li>
         </ul>
-        <a href="/resume.pdf" download
+        <a href="/resume_of_mahmud_rashid.pdf" download
           class="hidden md:flex items-center gap-2 px-4 py-2 bg-primary text-white hover:bg-primary/90 hover:shadow-md hover:shadow-primary/30 text-sm font-semibold rounded-md transition-all duration-300 ease-in-out border border-primary">
           <span>Resume</span>
           <PhDownloadSimple :size="16" />

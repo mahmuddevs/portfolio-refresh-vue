@@ -64,7 +64,7 @@ const navigateTo = (path: string) => {
 
       <!-- Mobile Download Resume Button -->
       <div class="p-4 border-t border-border/10 bg-secondary/10">
-        <a href="/resume.pdf" download
+        <a href="/resume_of_mahmud_rashid.pdf" download
           class="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-primary text-white hover:bg-primary/90 hover:shadow-md hover:shadow-primary/30 text-sm font-semibold rounded-md transition-all duration-300 ease-in-out border border-primary">
           <span>Download Resume</span>
           <PhDownloadSimple :size="18" />
